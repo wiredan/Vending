@@ -1,0 +1,61 @@
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  uuid TEXT UNIQUE,
+  email TEXT UNIQUE NOT NULL,
+  password_hash TEXT,
+  google_sub TEXT,
+  full_name TEXT,
+  first_name TEXT,
+  last_name TEXT,
+  phone TEXT,
+  role TEXT DEFAULT 'user',
+  is_admin INTEGER DEFAULT 0,
+  kyc_verified INTEGER DEFAULT 0,
+  kyc_status TEXT DEFAULT 'unverified',
+  balance REAL DEFAULT 0,
+  dan_balance REAL DEFAULT 0,
+  sda_balance REAL DEFAULT 0,
+  wallet_address TEXT,
+  sidra_wallet TEXT,
+  sidra_wallet_address TEXT,
+  virtual_account_number TEXT,
+  virtual_bank_name TEXT,
+  virtual_account_name TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS vending_orders (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  user_uuid TEXT,
+  user_name TEXT,
+  type TEXT NOT NULL,
+  network TEXT NOT NULL,
+  network_slug TEXT,
+  data_type TEXT,
+  product_code TEXT,
+  product_name TEXT,
+  recipient_phone TEXT,
+  amount REAL DEFAULT 0,
+  retail_price REAL DEFAULT 0,
+  margin_percent REAL DEFAULT 0,
+  is_voucher INTEGER DEFAULT 0,
+  quantity INTEGER DEFAULT 1,
+  status TEXT DEFAULT 'completed',
+  gateway_ref TEXT,
+  vouchers_json TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS wallet_ledger (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  entry_type TEXT NOT NULL,
+  amount REAL NOT NULL,
+  balance_before REAL DEFAULT 0,
+  balance_after REAL DEFAULT 0,
+  reference TEXT UNIQUE,
+  description TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
